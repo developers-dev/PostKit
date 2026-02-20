@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import { DemoLoginButton } from '@/components/demo-login-button'
 
 export default function LandingPage() {
   return (
@@ -36,14 +37,13 @@ export default function LandingPage() {
               </Link>
             </nav>
             <div className="flex items-center space-x-4">
+              <DemoLoginButton
+                size="default"
+                className="bg-blue-600 text-white hover:bg-blue-700"
+              />
               <Link href="/login">
                 <Button variant="ghost" className="text-gray-600">
                   Sign in
-                </Button>
-              </Link>
-              <Link href="/signup">
-                <Button className="bg-gray-900 text-white hover:bg-gray-800">
-                  Get started
                 </Button>
               </Link>
             </div>
@@ -63,25 +63,24 @@ export default function LandingPage() {
               with AI-powered analysis. Manage your entire hiring pipeline in a
               single dashboard.
             </p>
-            <div className="mt-10 flex items-center justify-center gap-x-4">
+            <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+              <DemoLoginButton
+                size="lg"
+                className="bg-blue-600 text-white hover:bg-blue-700 h-12 px-8 w-full sm:w-auto"
+              />
               <Link href="/signup">
                 <Button
                   size="lg"
-                  className="bg-gray-900 text-white hover:bg-gray-800 h-12 px-8"
+                  variant="outline"
+                  className="h-12 px-8 border-gray-300 w-full sm:w-auto"
                 >
                   Start free trial
                 </Button>
               </Link>
-              <Link href="#how-it-works">
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="h-12 px-8 border-gray-300"
-                >
-                  Learn more
-                </Button>
-              </Link>
             </div>
+            <p className="mt-4 text-sm text-gray-500">
+              No signup required for demo
+            </p>
           </div>
         </div>
       </section>
