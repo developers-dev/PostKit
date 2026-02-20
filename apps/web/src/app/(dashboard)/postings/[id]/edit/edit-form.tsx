@@ -16,6 +16,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Loader2 } from 'lucide-react'
 
 interface Posting {
   id: string
@@ -34,6 +35,14 @@ interface EditPostingFormProps {
   posting: Posting
 }
 
+// Format number with commas (e.g., 100000 -> 100,000)
+const formatNumberWithCommas = (value: string | number | null): string => {
+  if (value === null || value === '') return ''
+  const numericValue = String(value).replace(/[^0-9]/g, '')
+  if (!numericValue) return ''
+  return Number(numericValue).toLocaleString('ko-KR')
+}
+
 export function EditPostingForm({ posting }: EditPostingFormProps) {
   const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -43,8 +52,8 @@ export function EditPostingForm({ posting }: EditPostingFormProps) {
     description: posting.description || '',
     requirements: posting.requirements || '',
     tech_stack: posting.tech_stack?.join(', ') || '',
-    salary_min: posting.salary_min?.toString() || '',
-    salary_max: posting.salary_max?.toString() || '',
+    salary_min: formatNumberWithCommas(posting.salary_min),
+    salary_max: formatNumberWithCommas(posting.salary_max),
     location: posting.location || '',
     employment_type: posting.employment_type || 'full-time',
     status: posting.status || 'draft',
@@ -59,6 +68,19 @@ export function EditPostingForm({ posting }: EditPostingFormProps) {
 
   const handleSelectChange = (name: string, value: string) => {
     setFormData((prev) => ({ ...prev, [name]: value }))
+  }
+
+  // Handle salary input with formatting
+  const handleSalaryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    const formattedValue = formatNumberWithCommas(value)
+    setFormData((prev) => ({ ...prev, [name]: formattedValue }))
+  }
+
+  // Remove commas to get raw number for submission
+  const getRawNumber = (value: string): number | null => {
+    const numericValue = value.replace(/[^0-9]/g, '')
+    return numericValue ? parseInt(numericValue) : null
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -80,8 +102,8 @@ export function EditPostingForm({ posting }: EditPostingFormProps) {
           description: formData.description,
           requirements: formData.requirements,
           tech_stack: techStackArray,
-          salary_min: formData.salary_min ? parseInt(formData.salary_min) : null,
-          salary_max: formData.salary_max ? parseInt(formData.salary_max) : null,
+          salary_min: getRawNumber(formData.salary_min),
+          salary_max: getRawNumber(formData.salary_max),
           location: formData.location,
           employment_type: formData.employment_type,
           status: formData.status,
@@ -91,13 +113,13 @@ export function EditPostingForm({ posting }: EditPostingFormProps) {
       const result = await response.json()
 
       if (!response.ok) {
-        throw new Error(result.error || 'Failed to update posting')
+        throw new Error(result.error || '공고 수정에 실패했습니다')
       }
 
       router.push(`/postings/${posting.id}`)
       router.refresh()
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Something went wrong')
+      setError(err instanceof Error ? err.message : '오류가 발생했습니다')
     } finally {
       setIsSubmitting(false)
     }
@@ -115,35 +137,35 @@ export function EditPostingForm({ posting }: EditPostingFormProps) {
       <Card className="border-gray-200">
         <CardHeader>
           <CardTitle className="text-base font-semibold text-gray-900">
-            Basic Information
+            기본 정보
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="title">Job Title *</Label>
+            <Label htmlFor="title">직무명 *</Label>
             <Input
               id="title"
               name="title"
               value={formData.title}
               onChange={handleChange}
-              placeholder="e.g., Senior Frontend Developer"
+              placeholder="예: 시니어 프론트엔드 개발자"
               required
             />
           </div>
 
           <div className="grid gap-4 md:grid-cols-3">
             <div className="space-y-2">
-              <Label htmlFor="location">Location</Label>
+              <Label htmlFor="location">근무지</Label>
               <Input
                 id="location"
                 name="location"
                 value={formData.location}
                 onChange={handleChange}
-                placeholder="e.g., Seoul, Remote"
+                placeholder="예: 서울, 원격"
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="employment_type">Employment Type</Label>
+              <Label htmlFor="employment_type">고용 형태</Label>
               <Select
                 value={formData.employment_type}
                 onValueChange={(value) =>
@@ -151,29 +173,29 @@ export function EditPostingForm({ posting }: EditPostingFormProps) {
                 }
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Select type" />
+                  <SelectValue placeholder="선택하세요" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="full-time">Full-time</SelectItem>
-                  <SelectItem value="part-time">Part-time</SelectItem>
-                  <SelectItem value="contract">Contract</SelectItem>
-                  <SelectItem value="internship">Internship</SelectItem>
+                  <SelectItem value="full-time">정규직</SelectItem>
+                  <SelectItem value="part-time">파트타임</SelectItem>
+                  <SelectItem value="contract">계약직</SelectItem>
+                  <SelectItem value="internship">인턴</SelectItem>
                 </SelectContent>
               </Select>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="status">Status</Label>
+              <Label htmlFor="status">상태</Label>
               <Select
                 value={formData.status}
                 onValueChange={(value) => handleSelectChange('status', value)}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Select status" />
+                  <SelectValue placeholder="선택하세요" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="draft">Draft</SelectItem>
-                  <SelectItem value="active">Active</SelectItem>
-                  <SelectItem value="closed">Closed</SelectItem>
+                  <SelectItem value="draft">임시저장</SelectItem>
+                  <SelectItem value="active">진행중</SelectItem>
+                  <SelectItem value="closed">마감</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -181,25 +203,27 @@ export function EditPostingForm({ posting }: EditPostingFormProps) {
 
           <div className="grid gap-4 md:grid-cols-2">
             <div className="space-y-2">
-              <Label htmlFor="salary_min">Salary Range (Min)</Label>
+              <Label htmlFor="salary_min">연봉 범위 (최소)</Label>
               <Input
                 id="salary_min"
                 name="salary_min"
-                type="number"
+                type="text"
+                inputMode="numeric"
                 value={formData.salary_min}
-                onChange={handleChange}
-                placeholder="e.g., 50000000"
+                onChange={handleSalaryChange}
+                placeholder="예: 50,000,000"
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="salary_max">Salary Range (Max)</Label>
+              <Label htmlFor="salary_max">연봉 범위 (최대)</Label>
               <Input
                 id="salary_max"
                 name="salary_max"
-                type="number"
+                type="text"
+                inputMode="numeric"
                 value={formData.salary_max}
-                onChange={handleChange}
-                placeholder="e.g., 70000000"
+                onChange={handleSalaryChange}
+                placeholder="예: 70,000,000"
               />
             </div>
           </div>
@@ -210,45 +234,45 @@ export function EditPostingForm({ posting }: EditPostingFormProps) {
       <Card className="border-gray-200">
         <CardHeader>
           <CardTitle className="text-base font-semibold text-gray-900">
-            Job Details
+            상세 내용
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="description">Job Description</Label>
+            <Label htmlFor="description">채용공고 내용</Label>
             <Textarea
               id="description"
               name="description"
               value={formData.description}
               onChange={handleChange}
-              placeholder="Describe the role, responsibilities, and what the candidate will be working on..."
+              placeholder="역할, 담당 업무, 주요 프로젝트 등을 상세히 작성하세요..."
               rows={6}
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="requirements">Requirements</Label>
+            <Label htmlFor="requirements">자격 요건</Label>
             <Textarea
               id="requirements"
               name="requirements"
               value={formData.requirements}
               onChange={handleChange}
-              placeholder="List the required qualifications, experience, and skills..."
+              placeholder="필수 자격, 경력 요건, 기술 스킬 등을 작성하세요..."
               rows={6}
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="tech_stack">Tech Stack</Label>
+            <Label htmlFor="tech_stack">기술 스택</Label>
             <Input
               id="tech_stack"
               name="tech_stack"
               value={formData.tech_stack}
               onChange={handleChange}
-              placeholder="e.g., React, TypeScript, Node.js (comma separated)"
+              placeholder="예: React, TypeScript, Node.js (쉼표로 구분)"
             />
             <p className="text-xs text-gray-500">
-              Separate multiple technologies with commas
+              여러 기술은 쉼표로 구분하세요
             </p>
           </div>
         </CardContent>
@@ -262,14 +286,21 @@ export function EditPostingForm({ posting }: EditPostingFormProps) {
           className="border-gray-300"
           onClick={() => router.push(`/postings/${posting.id}`)}
         >
-          Cancel
+          취소
         </Button>
         <Button
           type="submit"
           className="bg-gray-900 hover:bg-gray-800"
           disabled={isSubmitting}
         >
-          {isSubmitting ? 'Saving...' : 'Save Changes'}
+          {isSubmitting ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              저장 중...
+            </>
+          ) : (
+            '변경사항 저장'
+          )}
         </Button>
       </div>
     </form>

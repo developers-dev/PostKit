@@ -75,23 +75,23 @@ export function PostingActions({ postingId, currentStatus }: PostingActionsProps
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="outline" className="border-gray-300" disabled={isUpdating}>
-            {isUpdating ? 'Updating...' : 'Actions'}
+            {isUpdating ? '처리 중...' : '관리'}
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-48">
           {currentStatus === 'draft' && (
             <DropdownMenuItem onClick={() => handleStatusChange('active')}>
-              Publish
+              공고 게시
             </DropdownMenuItem>
           )}
           {currentStatus === 'active' && (
             <DropdownMenuItem onClick={() => handleStatusChange('closed')}>
-              Close Posting
+              공고 마감
             </DropdownMenuItem>
           )}
           {currentStatus === 'closed' && (
             <DropdownMenuItem onClick={() => handleStatusChange('active')}>
-              Reopen
+              공고 재개
             </DropdownMenuItem>
           )}
           <DropdownMenuSeparator />
@@ -99,7 +99,7 @@ export function PostingActions({ postingId, currentStatus }: PostingActionsProps
             onClick={() => setShowDeleteDialog(true)}
             className="text-red-600 focus:text-red-600"
           >
-            Delete
+            삭제
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -107,10 +107,10 @@ export function PostingActions({ postingId, currentStatus }: PostingActionsProps
       <Dialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Delete Posting</DialogTitle>
+            <DialogTitle>공고 삭제</DialogTitle>
             <DialogDescription>
-              Are you sure you want to delete this job posting? This action cannot
-              be undone and will remove all associated applicant data.
+              이 채용공고를 삭제하시겠습니까? 이 작업은 되돌릴 수 없으며,
+              관련된 모든 지원자 데이터도 함께 삭제됩니다.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -119,14 +119,14 @@ export function PostingActions({ postingId, currentStatus }: PostingActionsProps
               onClick={() => setShowDeleteDialog(false)}
               disabled={isDeleting}
             >
-              Cancel
+              취소
             </Button>
             <Button
               variant="destructive"
               onClick={handleDelete}
               disabled={isDeleting}
             >
-              {isDeleting ? 'Deleting...' : 'Delete'}
+              {isDeleting ? '삭제 중...' : '삭제'}
             </Button>
           </DialogFooter>
         </DialogContent>

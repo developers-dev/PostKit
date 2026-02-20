@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { cookies } from 'next/headers'
 import { Button } from '@/components/ui/button'
 import { EditPostingForm } from './edit-form'
 
@@ -11,10 +12,17 @@ interface PageProps {
 
 async function getPosting(id: string) {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
+  const cookieStore = await cookies()
+  const cookieHeader = cookieStore.getAll()
+    .map(c => `${c.name}=${c.value}`)
+    .join('; ')
 
   try {
     const response = await fetch(`${baseUrl}/api/postings/${id}`, {
       cache: 'no-store',
+      headers: {
+        Cookie: cookieHeader,
+      },
     })
 
     if (!response.ok) {
@@ -44,25 +52,25 @@ export default async function EditPostingPage({ params }: PageProps) {
         <div>
           <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
             <Link href="/postings" className="hover:text-gray-900">
-              Job Postings
+              채용공고
             </Link>
             <span>/</span>
             <Link href={`/postings/${id}`} className="hover:text-gray-900">
               {posting.title}
             </Link>
             <span>/</span>
-            <span>Edit</span>
+            <span>수정</span>
           </div>
           <h1 className="text-2xl font-semibold text-gray-900">
-            Edit Job Posting
+            채용공고 수정
           </h1>
           <p className="mt-1 text-sm text-gray-600">
-            Update the details of this job posting
+            채용공고 정보를 수정하세요
           </p>
         </div>
         <Link href={`/postings/${id}`}>
           <Button variant="outline" className="border-gray-300">
-            Cancel
+            취소
           </Button>
         </Link>
       </div>

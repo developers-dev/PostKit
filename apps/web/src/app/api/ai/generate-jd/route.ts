@@ -23,35 +23,46 @@ interface GeneratedJD {
 
 export async function POST(request: Request) {
   try {
-    const apiKey = process.env.OPENAI_API_KEY
+    const body: GenerateJDRequest & { apiKey?: string } = await request.json()
+
+    // Check for API key: first from request body, then from environment
+    const apiKey = body.apiKey || process.env.OPENAI_API_KEY
 
     if (!apiKey) {
       // Return mock data if OpenAI is not configured
-      const body: GenerateJDRequest = await request.json()
+      const employmentTypeMap: Record<string, string> = {
+        'full-time': '정규직',
+        'part-time': '파트타임',
+        'contract': '계약직',
+        'internship': '인턴',
+      }
+      const empType = employmentTypeMap[body.employmentType || 'full-time'] || '정규직'
 
-      const mockDescription = `We are looking for a talented ${body.title} to join our team.
+      const mockDescription = `${body.title} 포지션에 함께할 인재를 찾고 있습니다.
 
-As a ${body.title}, you will be responsible for:
-- Designing and implementing high-quality solutions
-- Collaborating with cross-functional teams to define and ship new features
-- Writing clean, maintainable, and efficient code
-- Participating in code reviews and providing constructive feedback
-- Contributing to architectural decisions and technical discussions
-${body.techStack && body.techStack.length > 0 ? `- Working with technologies including ${body.techStack.join(', ')}` : ''}
+[담당 업무]
+• 고품질의 솔루션 설계 및 구현
+• 크로스펑셔널 팀과 협업하여 새로운 기능 정의 및 개발
+• 깔끔하고 유지보수 가능한 효율적인 코드 작성
+• 코드 리뷰 참여 및 건설적인 피드백 제공
+• 아키텍처 결정 및 기술 논의에 기여
+${body.techStack && body.techStack.length > 0 ? `• ${body.techStack.join(', ')} 등의 기술 스택을 활용한 개발` : ''}
 
-This is a ${body.employmentType || 'full-time'} position${body.location ? ` based in ${body.location}` : ''}.`
+[근무 조건]
+• 고용 형태: ${empType}
+${body.location ? `• 근무지: ${body.location}` : ''}`
 
-      const mockRequirements = `Required Qualifications:
-- ${body.experience || '3+ years'} of professional experience in a similar role
-${body.techStack && body.techStack.length > 0 ? `- Strong proficiency in ${body.techStack.slice(0, 3).join(', ')}` : '- Strong technical skills relevant to the role'}
-- Excellent problem-solving and analytical skills
-- Strong communication skills and ability to work in a team
-- Experience with agile development methodologies
+      const mockRequirements = `[필수 요건]
+• ${body.experience || '3년 이상'}의 관련 분야 실무 경험
+${body.techStack && body.techStack.length > 0 ? `• ${body.techStack.slice(0, 3).join(', ')} 능숙한 활용 능력` : '• 해당 직무와 관련된 기술 역량'}
+• 뛰어난 문제 해결 및 분석 능력
+• 원활한 커뮤니케이션 능력과 팀워크
+• 애자일 개발 방법론 경험
 
-Nice to Have:
-- Experience with cloud platforms (AWS, GCP, or Azure)
-- Contributions to open-source projects
-- Experience mentoring junior developers`
+[우대 사항]
+• 클라우드 플랫폼(AWS, GCP, Azure) 경험
+• 오픈소스 프로젝트 기여 경험
+• 주니어 개발자 멘토링 경험`
 
       return NextResponse.json({
         data: {
@@ -61,16 +72,14 @@ Nice to Have:
       })
     }
 
-    const body: GenerateJDRequest = await request.json()
-
     if (!body.title) {
       return NextResponse.json(
-        { error: 'Job title is required' },
+        { error: '직무명을 입력해주세요' },
         { status: 400 }
       )
     }
 
-    const openai = createOpenAIClient()
+    const openai = createOpenAIClient(apiKey)
 
     const completion = await openai.chat.completions.create({
       model: 'gpt-4o',
@@ -96,13 +105,13 @@ Nice to Have:
 
     if (error instanceof Error && error.message.includes('API key')) {
       return NextResponse.json(
-        { error: 'OpenAI API key is not configured' },
+        { error: 'OpenAI API 키가 설정되지 않았습니다' },
         { status: 500 }
       )
     }
 
     return NextResponse.json(
-      { error: 'Failed to generate job description' },
+      { error: '채용공고 생성에 실패했습니다' },
       { status: 500 }
     )
   }

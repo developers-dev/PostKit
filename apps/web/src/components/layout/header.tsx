@@ -1,5 +1,8 @@
 // apps/web/src/components/layout/header.tsx
 
+'use client'
+
+import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -9,18 +12,28 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import { Badge } from '@/components/ui/badge'
 import { logout } from '@/app/(auth)/actions'
 
 interface HeaderProps {
   title?: string
   userEmail?: string
   companyName?: string
+  isDemo?: boolean
 }
 
-export function Header({ title, userEmail, companyName }: HeaderProps) {
+export function Header({ title, userEmail, companyName, isDemo }: HeaderProps) {
+  const router = useRouter()
   const initials = userEmail
     ? userEmail.substring(0, 2).toUpperCase()
     : 'UK'
+
+  function handleDemoLogout() {
+    // Clear demo session
+    localStorage.removeItem('postkit_demo_session')
+    document.cookie = 'postkit_demo=; path=/; max-age=0'
+    router.push('/')
+  }
 
   return (
     <header className="sticky top-0 z-40 h-16 bg-white border-b border-gray-200">
@@ -32,6 +45,11 @@ export function Header({ title, userEmail, companyName }: HeaderProps) {
         </div>
 
         <div className="flex items-center gap-4">
+          {isDemo && (
+            <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-100">
+              데모 모드
+            </Badge>
+          )}
           {companyName && (
             <span className="text-sm text-gray-600">{companyName}</span>
           )}
@@ -61,17 +79,23 @@ export function Header({ title, userEmail, companyName }: HeaderProps) {
               <DropdownMenuSeparator />
               <DropdownMenuItem asChild>
                 <a href="/settings" className="cursor-pointer">
-                  Settings
+                  설정
                 </a>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem asChild>
-                <form action={logout} className="w-full">
-                  <button type="submit" className="w-full text-left">
-                    Sign out
-                  </button>
-                </form>
-              </DropdownMenuItem>
+              {isDemo ? (
+                <DropdownMenuItem onClick={handleDemoLogout} className="cursor-pointer">
+                  로그아웃
+                </DropdownMenuItem>
+              ) : (
+                <DropdownMenuItem asChild>
+                  <form action={logout} className="w-full">
+                    <button type="submit" className="w-full text-left">
+                      로그아웃
+                    </button>
+                  </form>
+                </DropdownMenuItem>
+              )}
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

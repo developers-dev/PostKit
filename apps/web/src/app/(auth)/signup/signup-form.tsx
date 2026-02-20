@@ -18,7 +18,7 @@ function SubmitButton() {
       className="w-full bg-gray-900 hover:bg-gray-800"
       disabled={pending}
     >
-      {pending ? 'Creating account...' : 'Create account'}
+      {pending ? '계정 생성 중...' : '계정 만들기'}
     </Button>
   )
 }
@@ -44,21 +44,21 @@ export function SignupForm() {
 
       <div className="space-y-2">
         <Label htmlFor="companyName" className="text-gray-700">
-          Company name
+          회사명
         </Label>
         <Input
           id="companyName"
           name="companyName"
           type="text"
           required
-          placeholder="Acme Inc."
+          placeholder="회사명을 입력하세요"
           className="h-11"
         />
       </div>
 
       <div className="space-y-2">
         <Label htmlFor="email" className="text-gray-700">
-          Work email
+          업무용 이메일
         </Label>
         <Input
           id="email"
@@ -73,7 +73,7 @@ export function SignupForm() {
 
       <div className="space-y-2">
         <Label htmlFor="password" className="text-gray-700">
-          Password
+          비밀번호
         </Label>
         <Input
           id="password"
@@ -81,7 +81,7 @@ export function SignupForm() {
           type="password"
           autoComplete="new-password"
           required
-          placeholder="Minimum 8 characters"
+          placeholder="최소 8자 이상"
           minLength={8}
           className="h-11"
         />
@@ -90,7 +90,7 @@ export function SignupForm() {
       <SubmitButton />
 
       <p className="text-xs text-gray-500 text-center">
-        By creating an account, you agree to our Terms of Service and Privacy Policy
+        계정을 생성하면 서비스 이용약관 및 개인정보처리방침에 동의하게 됩니다
       </p>
     </form>
   )

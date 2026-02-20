@@ -51,6 +51,8 @@ export function LoginForm() {
       isDemo: true,
       createdAt: new Date().toISOString()
     }))
+    // Also set a cookie for server-side middleware to recognize demo session
+    document.cookie = 'postkit_demo=true; path=/; max-age=86400; SameSite=Lax'
     router.push('/dashboard')
   }
 

@@ -65,7 +65,7 @@ export function PipelineColumn({
 
           {applicants.length === 0 && (
             <div className="flex items-center justify-center h-20 text-sm text-gray-400">
-              Drop candidates here
+              지원자를 여기에 드롭하세요
             </div>
           )}
         </div>

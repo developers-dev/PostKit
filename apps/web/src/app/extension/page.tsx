@@ -21,19 +21,19 @@ export default function ExtensionPage() {
                 href="/#features"
                 className="text-sm font-medium text-gray-600 hover:text-gray-900"
               >
-                기능
+                Features
               </Link>
               <Link
                 href="/#how-it-works"
                 className="text-sm font-medium text-gray-600 hover:text-gray-900"
               >
-                사용방법
+                How it works
               </Link>
               <Link
                 href="/extension"
                 className="text-sm font-medium text-gray-900"
               >
-                익스텐션
+                Extension
               </Link>
             </nav>
             <div className="flex items-center space-x-4">
@@ -323,19 +323,19 @@ export default function ExtensionPage() {
                 href="/#features"
                 className="text-sm text-gray-600 hover:text-gray-900"
               >
-                기능
+                Features
               </Link>
               <Link
                 href="/extension"
                 className="text-sm text-gray-600 hover:text-gray-900"
               >
-                익스텐션
+                Extension
               </Link>
               <Link
                 href="/login"
                 className="text-sm text-gray-600 hover:text-gray-900"
               >
-                로그인
+                Login
               </Link>
             </nav>
           </div>

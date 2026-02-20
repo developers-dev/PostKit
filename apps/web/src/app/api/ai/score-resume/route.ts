@@ -25,7 +25,7 @@ export async function POST(request: Request) {
 
     if (!jobDescription) {
       return NextResponse.json(
-        { error: 'Job description is required' },
+        { error: '채용공고 내용을 입력해주세요' },
         { status: 400 }
       )
     }
@@ -46,7 +46,7 @@ export async function POST(request: Request) {
       } catch (pdfError) {
         console.error('PDF parsing error:', pdfError)
         return NextResponse.json(
-          { error: 'Failed to parse PDF file' },
+          { error: 'PDF 파일 파싱에 실패했습니다' },
           { status: 400 }
         )
       }
@@ -54,12 +54,14 @@ export async function POST(request: Request) {
 
     if (!extractedText) {
       return NextResponse.json(
-        { error: 'Resume content is required' },
+        { error: '이력서 내용을 입력해주세요' },
         { status: 400 }
       )
     }
 
-    const apiKey = process.env.OPENAI_API_KEY
+    // Check for API key: first from request header, then from environment
+    const clientApiKey = formData.get('apiKey') as string | null
+    const apiKey = clientApiKey || process.env.OPENAI_API_KEY
 
     if (!apiKey) {
       // Return mock data if OpenAI is not configured
@@ -69,40 +71,40 @@ export async function POST(request: Request) {
         culture_score: Math.floor(Math.random() * 20) + 70,
         career_score: Math.floor(Math.random() * 20) + 75,
         strengths: [
-          'Strong technical background with relevant experience',
-          'Demonstrated leadership in previous roles',
-          'Good problem-solving skills evident from projects',
+          '관련 분야에서의 풍부한 기술적 경험 보유',
+          '이전 직장에서의 리더십 역량 입증',
+          '프로젝트 경험을 통한 우수한 문제 해결 능력',
         ],
         risks: [
-          'Limited experience with some required technologies',
-          'May require onboarding time for domain-specific knowledge',
+          '일부 요구 기술에 대한 경험 부족',
+          '도메인 특화 지식 습득을 위한 온보딩 기간 필요',
         ],
         recommended_questions: [
-          'Can you describe a challenging technical problem you solved recently?',
-          'How do you approach learning new technologies?',
-          'Tell us about your experience working in cross-functional teams.',
+          '최근에 해결한 어려운 기술적 문제에 대해 설명해주세요.',
+          '새로운 기술을 학습할 때 어떤 방식으로 접근하시나요?',
+          '크로스펑셔널 팀에서 협업한 경험에 대해 말씀해주세요.',
         ],
         summary:
-          'A solid candidate with relevant technical skills and good career progression. Shows potential for growth and cultural fit.',
+          '관련 기술 역량과 좋은 경력 성장세를 보이는 적합한 지원자입니다. 성장 가능성과 문화 적합도가 높아 보입니다.',
       }
 
       return NextResponse.json({ data: mockResult })
     }
 
-    const openai = createOpenAIClient()
+    const openai = createOpenAIClient(apiKey)
 
-    const userPrompt = `Please evaluate the following resume against the job description and requirements.
+    const userPrompt = `다음 이력서를 채용공고 및 요구사항에 맞게 평가해주세요. 반드시 한국어로 작성해주세요.
 
-## Job Description
+## 채용공고 내용
 ${jobDescription}
 
-## Requirements
-${requirements || 'Not specified'}
+## 자격 요건
+${requirements || '명시되지 않음'}
 
-## Resume Content
+## 이력서 내용
 ${extractedText}
 
-Provide a comprehensive evaluation in the specified JSON format.`
+지정된 JSON 형식으로 종합적인 평가를 한국어로 제공해주세요.`
 
     const completion = await openai.chat.completions.create({
       model: 'gpt-4o',
@@ -128,13 +130,13 @@ Provide a comprehensive evaluation in the specified JSON format.`
 
     if (error instanceof Error && error.message.includes('API key')) {
       return NextResponse.json(
-        { error: 'OpenAI API key is not configured' },
+        { error: 'OpenAI API 키가 설정되지 않았습니다' },
         { status: 500 }
       )
     }
 
     return NextResponse.json(
-      { error: 'Failed to score resume' },
+      { error: '이력서 채점에 실패했습니다' },
       { status: 500 }
     )
   }

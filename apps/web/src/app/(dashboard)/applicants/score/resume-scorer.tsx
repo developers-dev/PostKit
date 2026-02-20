@@ -66,17 +66,17 @@ export function ResumeScorer() {
 
   const handleScore = async () => {
     if (!jobDescription) {
-      setError('Please provide a job description')
+      setError('채용공고 내용을 입력해주세요')
       return
     }
 
     if (inputMode === 'file' && !resumeFile) {
-      setError('Please upload a resume PDF')
+      setError('이력서 PDF를 업로드해주세요')
       return
     }
 
     if (inputMode === 'text' && !resumeText) {
-      setError('Please paste the resume text')
+      setError('이력서 텍스트를 입력해주세요')
       return
     }
 
@@ -95,6 +95,12 @@ export function ResumeScorer() {
         formData.append('resumeText', resumeText)
       }
 
+      // Get API key from localStorage
+      const savedApiKey = localStorage.getItem('postkit_openai_key')
+      if (savedApiKey) {
+        formData.append('apiKey', savedApiKey)
+      }
+
       const response = await fetch('/api/ai/score-resume', {
         method: 'POST',
         body: formData,
@@ -103,12 +109,12 @@ export function ResumeScorer() {
       const data = await response.json()
 
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to score resume')
+        throw new Error(data.error || '이력서 채점에 실패했습니다')
       }
 
       setResult(data.data)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Something went wrong')
+      setError(err instanceof Error ? err.message : '오류가 발생했습니다')
     } finally {
       setIsScoring(false)
     }
@@ -122,7 +128,7 @@ export function ResumeScorer() {
         <Card className="border-gray-200">
           <CardHeader>
             <CardTitle className="text-base font-semibold text-gray-900">
-              Resume
+              이력서
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -134,7 +140,7 @@ export function ResumeScorer() {
                 onClick={() => setInputMode('file')}
                 className={inputMode === 'file' ? 'bg-gray-900' : 'border-gray-300'}
               >
-                Upload PDF
+                PDF 업로드
               </Button>
               <Button
                 type="button"
@@ -143,13 +149,13 @@ export function ResumeScorer() {
                 onClick={() => setInputMode('text')}
                 className={inputMode === 'text' ? 'bg-gray-900' : 'border-gray-300'}
               >
-                Paste Text
+                텍스트 붙여넣기
               </Button>
             </div>
 
             {inputMode === 'file' ? (
               <div className="space-y-2">
-                <Label htmlFor="resume">Resume PDF</Label>
+                <Label htmlFor="resume">이력서 PDF</Label>
                 <Input
                   id="resume"
                   type="file"
@@ -159,18 +165,18 @@ export function ResumeScorer() {
                 />
                 {resumeFile && (
                   <p className="text-sm text-gray-600">
-                    Selected: {resumeFile.name}
+                    선택됨: {resumeFile.name}
                   </p>
                 )}
               </div>
             ) : (
               <div className="space-y-2">
-                <Label htmlFor="resumeText">Resume Text</Label>
+                <Label htmlFor="resumeText">이력서 텍스트</Label>
                 <Textarea
                   id="resumeText"
                   value={resumeText}
                   onChange={(e) => setResumeText(e.target.value)}
-                  placeholder="Paste the resume content here..."
+                  placeholder="이력서 내용을 여기에 붙여넣으세요..."
                   rows={8}
                 />
               </div>
@@ -182,27 +188,27 @@ export function ResumeScorer() {
         <Card className="border-gray-200">
           <CardHeader>
             <CardTitle className="text-base font-semibold text-gray-900">
-              Job Details
+              채용 정보
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="jobDescription">Job Description *</Label>
+              <Label htmlFor="jobDescription">채용공고 내용 *</Label>
               <Textarea
                 id="jobDescription"
                 value={jobDescription}
                 onChange={(e) => setJobDescription(e.target.value)}
-                placeholder="Enter the job description..."
+                placeholder="채용공고 내용을 입력하세요..."
                 rows={6}
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="requirements">Requirements</Label>
+              <Label htmlFor="requirements">자격 요건</Label>
               <Textarea
                 id="requirements"
                 value={requirements}
                 onChange={(e) => setRequirements(e.target.value)}
-                placeholder="Enter the job requirements..."
+                placeholder="자격 요건을 입력하세요..."
                 rows={4}
               />
             </div>
@@ -242,10 +248,10 @@ export function ResumeScorer() {
                   d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                 />
               </svg>
-              Analyzing Resume...
+              이력서 분석 중...
             </>
           ) : (
-            'Score Resume'
+            '이력서 채점하기'
           )}
         </Button>
       </div>
@@ -261,7 +267,7 @@ export function ResumeScorer() {
                   <div className="text-6xl font-bold text-gray-900">
                     {result.total_score}
                   </div>
-                  <div className="text-sm text-gray-500 mt-1">Overall Score</div>
+                  <div className="text-sm text-gray-500 mt-1">종합 점수</div>
                 </div>
               </CardContent>
             </Card>
@@ -270,13 +276,13 @@ export function ResumeScorer() {
             <Card className="border-gray-200">
               <CardHeader>
                 <CardTitle className="text-base font-semibold text-gray-900">
-                  Score Breakdown
+                  점수 상세
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <ScoreBar label="Skill Match" score={result.skill_score} />
-                <ScoreBar label="Culture Fit" score={result.culture_score} />
-                <ScoreBar label="Career Trajectory" score={result.career_score} />
+                <ScoreBar label="기술 적합도" score={result.skill_score} />
+                <ScoreBar label="문화 적합도" score={result.culture_score} />
+                <ScoreBar label="경력 성장성" score={result.career_score} />
               </CardContent>
             </Card>
 
@@ -284,7 +290,7 @@ export function ResumeScorer() {
             <Card className="border-gray-200">
               <CardHeader>
                 <CardTitle className="text-base font-semibold text-gray-900">
-                  Summary
+                  요약
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -297,7 +303,7 @@ export function ResumeScorer() {
               <Card className="border-gray-200">
                 <CardHeader className="pb-2">
                   <CardTitle className="text-sm font-semibold text-green-700">
-                    Strengths
+                    강점
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -318,7 +324,7 @@ export function ResumeScorer() {
               <Card className="border-gray-200">
                 <CardHeader className="pb-2">
                   <CardTitle className="text-sm font-semibold text-red-700">
-                    Risks
+                    리스크
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -341,7 +347,7 @@ export function ResumeScorer() {
             <Card className="border-gray-200">
               <CardHeader>
                 <CardTitle className="text-base font-semibold text-gray-900">
-                  Recommended Interview Questions
+                  추천 면접 질문
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -379,7 +385,7 @@ export function ResumeScorer() {
                   />
                 </svg>
                 <p className="mt-4 text-sm">
-                  Upload a resume and provide job details to see the AI evaluation
+                  이력서를 업로드하고 채용 정보를 입력하면 AI가 평가합니다
                 </p>
               </div>
             </CardContent>

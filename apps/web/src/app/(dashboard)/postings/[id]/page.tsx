@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { cookies } from 'next/headers'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -14,10 +15,17 @@ interface PageProps {
 
 async function getPosting(id: string) {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
+  const cookieStore = await cookies()
+  const cookieHeader = cookieStore.getAll()
+    .map(c => `${c.name}=${c.value}`)
+    .join('; ')
 
   try {
     const response = await fetch(`${baseUrl}/api/postings/${id}`, {
       cache: 'no-store',
+      headers: {
+        Cookie: cookieHeader,
+      },
     })
 
     if (!response.ok) {
@@ -35,18 +43,18 @@ async function getPosting(id: string) {
 function getStatusBadge(status: string) {
   switch (status) {
     case 'active':
-      return <Badge className="bg-green-100 text-green-800 hover:bg-green-100">Active</Badge>
+      return <Badge className="bg-green-100 text-green-800 hover:bg-green-100">진행중</Badge>
     case 'draft':
-      return <Badge className="bg-gray-100 text-gray-800 hover:bg-gray-100">Draft</Badge>
+      return <Badge className="bg-gray-100 text-gray-800 hover:bg-gray-100">임시저장</Badge>
     case 'closed':
-      return <Badge className="bg-red-100 text-red-800 hover:bg-red-100">Closed</Badge>
+      return <Badge className="bg-red-100 text-red-800 hover:bg-red-100">마감</Badge>
     default:
       return <Badge>{status}</Badge>
   }
 }
 
 function formatSalary(min?: number | null, max?: number | null) {
-  if (!min && !max) return 'Not specified'
+  if (!min && !max) return '미정'
 
   const format = (n: number) =>
     new Intl.NumberFormat('ko-KR', {
@@ -56,9 +64,9 @@ function formatSalary(min?: number | null, max?: number | null) {
     }).format(n)
 
   if (min && max) return `${format(min)} - ${format(max)}`
-  if (min) return `From ${format(min)}`
-  if (max) return `Up to ${format(max)}`
-  return 'Not specified'
+  if (min) return `${format(min)} 이상`
+  if (max) return `${format(max)} 이하`
+  return '미정'
 }
 
 export default async function PostingDetailPage({ params }: PageProps) {
@@ -76,7 +84,7 @@ export default async function PostingDetailPage({ params }: PageProps) {
         <div>
           <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
             <Link href="/postings" className="hover:text-gray-900">
-              Job Postings
+              채용공고
             </Link>
             <span>/</span>
             <span>{posting.title}</span>
@@ -88,14 +96,14 @@ export default async function PostingDetailPage({ params }: PageProps) {
             {getStatusBadge(posting.status)}
           </div>
           <p className="mt-1 text-sm text-gray-600">
-            Created on {new Date(posting.created_at).toLocaleDateString()}
+            등록일: {new Date(posting.created_at).toLocaleDateString('ko-KR')}
           </p>
         </div>
         <div className="flex items-center gap-3">
           <PostingActions postingId={id} currentStatus={posting.status} />
           <Link href={`/postings/${id}/edit`}>
             <Button variant="outline" className="border-gray-300">
-              Edit
+              수정
             </Button>
           </Link>
         </div>
@@ -108,12 +116,12 @@ export default async function PostingDetailPage({ params }: PageProps) {
           <Card className="border-gray-200">
             <CardHeader>
               <CardTitle className="text-base font-semibold text-gray-900">
-                Job Description
+                채용공고 내용
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="prose prose-sm max-w-none text-gray-600 whitespace-pre-wrap">
-                {posting.description || 'No description provided.'}
+                {posting.description || '내용이 없습니다.'}
               </div>
             </CardContent>
           </Card>
@@ -122,12 +130,12 @@ export default async function PostingDetailPage({ params }: PageProps) {
           <Card className="border-gray-200">
             <CardHeader>
               <CardTitle className="text-base font-semibold text-gray-900">
-                Requirements
+                자격 요건
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="prose prose-sm max-w-none text-gray-600 whitespace-pre-wrap">
-                {posting.requirements || 'No requirements specified.'}
+                {posting.requirements || '자격 요건이 없습니다.'}
               </div>
             </CardContent>
           </Card>
@@ -139,26 +147,29 @@ export default async function PostingDetailPage({ params }: PageProps) {
           <Card className="border-gray-200">
             <CardHeader>
               <CardTitle className="text-base font-semibold text-gray-900">
-                Details
+                상세 정보
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <p className="text-sm text-gray-500">Location</p>
+                <p className="text-sm text-gray-500">근무지</p>
                 <p className="text-sm font-medium text-gray-900">
-                  {posting.location || 'Not specified'}
+                  {posting.location || '미정'}
                 </p>
               </div>
               <Separator />
               <div>
-                <p className="text-sm text-gray-500">Employment Type</p>
-                <p className="text-sm font-medium text-gray-900 capitalize">
-                  {posting.employment_type?.replace('-', ' ') || 'Not specified'}
+                <p className="text-sm text-gray-500">고용 형태</p>
+                <p className="text-sm font-medium text-gray-900">
+                  {posting.employment_type === 'full-time' ? '정규직' :
+                   posting.employment_type === 'part-time' ? '파트타임' :
+                   posting.employment_type === 'contract' ? '계약직' :
+                   posting.employment_type === 'internship' ? '인턴' : '미정'}
                 </p>
               </div>
               <Separator />
               <div>
-                <p className="text-sm text-gray-500">Salary Range</p>
+                <p className="text-sm text-gray-500">연봉 범위</p>
                 <p className="text-sm font-medium text-gray-900">
                   {formatSalary(posting.salary_min, posting.salary_max)}
                 </p>
@@ -171,7 +182,7 @@ export default async function PostingDetailPage({ params }: PageProps) {
             <Card className="border-gray-200">
               <CardHeader>
                 <CardTitle className="text-base font-semibold text-gray-900">
-                  Tech Stack
+                  기술 스택
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -194,17 +205,17 @@ export default async function PostingDetailPage({ params }: PageProps) {
           <Card className="border-gray-200">
             <CardHeader>
               <CardTitle className="text-base font-semibold text-gray-900">
-                Actions
+                빠른 실행
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
               <Link href={`/applicants?posting=${id}`} className="block">
                 <Button variant="outline" className="w-full border-gray-300">
-                  View Applicants
+                  지원자 보기
                 </Button>
               </Link>
               <Button variant="outline" className="w-full border-gray-300">
-                Copy Link
+                링크 복사
               </Button>
             </CardContent>
           </Card>

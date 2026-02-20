@@ -5,6 +5,7 @@
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { cn } from '@/lib/utils'
+import { ExternalLink } from 'lucide-react'
 import type { Applicant } from './pipeline-board'
 
 interface ApplicantCardProps {
@@ -21,11 +22,11 @@ function getScoreColor(score: number) {
 
 function getPlatformLabel(platform: string) {
   const labels: Record<string, string> = {
-    jobkorea: 'JobKorea',
-    saramin: 'Saramin',
-    wanted: 'Wanted',
-    jumpit: 'Jumpit',
-    direct: 'Direct',
+    jobkorea: '잡코리아',
+    saramin: '사람인',
+    wanted: '원티드',
+    jumpit: '점핏',
+    direct: '직접 지원',
   }
   return labels[platform] || platform
 }
@@ -73,9 +74,26 @@ export function ApplicantCard({ applicant, isDragging }: ApplicantCardProps) {
       </div>
 
       <div className="mt-2 flex items-center justify-between text-xs text-gray-500">
-        <span className="capitalize">{getPlatformLabel(applicant.platform)}</span>
+        <span>{getPlatformLabel(applicant.platform)}</span>
         <span>{applicant.appliedAt}</span>
       </div>
+
+      {/* Resume Link */}
+      {applicant.resumeUrl && (
+        <div className="mt-2 pt-2 border-t border-gray-100">
+          <a
+            href={applicant.resumeUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+            onPointerDown={(e) => e.stopPropagation()}
+            className="inline-flex items-center gap-1 text-xs text-blue-600 hover:text-blue-800 cursor-pointer"
+          >
+            <ExternalLink className="h-3 w-3" />
+            이력서 보기
+          </a>
+        </div>
+      )}
     </div>
   )
 }

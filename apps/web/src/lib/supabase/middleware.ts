@@ -45,13 +45,17 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser()
 
+  // Check for demo session cookie
+  const isDemoSession = request.cookies.get('postkit_demo')?.value === 'true'
+
   // Protected routes - redirect to login if not authenticated
   const protectedPaths = ['/dashboard', '/postings', '/applicants', '/settings']
   const isProtectedPath = protectedPaths.some((path) =>
     request.nextUrl.pathname.startsWith(path)
   )
 
-  if (isProtectedPath && !user) {
+  // Allow access if user is authenticated OR has demo session
+  if (isProtectedPath && !user && !isDemoSession) {
     const url = request.nextUrl.clone()
     url.pathname = '/login'
     url.searchParams.set('redirect', request.nextUrl.pathname)
