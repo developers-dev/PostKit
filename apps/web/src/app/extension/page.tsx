@@ -13,7 +13,7 @@ export default function ExtensionPage() {
           <div className="flex h-16 items-center justify-between">
             <div className="flex items-center">
               <Link href="/" className="text-xl font-semibold text-gray-900">
-                PostKit
+                Recruify
               </Link>
             </div>
             <nav className="hidden md:flex items-center space-x-8">
@@ -55,7 +55,7 @@ export default function ExtensionPage() {
               준비중
             </Badge>
             <h1 className="text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
-              PostKit 크롬 익스텐션
+              Recruify 크롬 익스텐션
             </h1>
             <p className="mt-6 text-lg leading-8 text-gray-600">
               채용 플랫폼을 넘나들며 공고 게시와 이력서 채점을 자동화하는
@@ -110,7 +110,7 @@ export default function ExtensionPage() {
                 </h3>
               </div>
               <p className="text-gray-600">
-                PostKit에서 작성한 채용공고를 잡코리아, 사람인, 원티드, 점핏 등
+                Recruify에서 작성한 채용공고를 잡코리아, 사람인, 원티드, 점핏 등
                 주요 채용 플랫폼에 자동으로 게시합니다. 각 플랫폼의 입력 폼을
                 자동으로 채워주어 반복 작업을 없앱니다.
               </p>
@@ -208,11 +208,11 @@ export default function ExtensionPage() {
                   </svg>
                 </div>
                 <h3 className="text-lg font-semibold text-gray-900">
-                  PostKit 대시보드 연동
+                  Recruify 대시보드 연동
                 </h3>
               </div>
               <p className="text-gray-600">
-                익스텐션에서 채점한 결과는 PostKit 대시보드와 자동으로 동기화됩니다.
+                익스텐션에서 채점한 결과는 Recruify 대시보드와 자동으로 동기화됩니다.
                 웹에서 전체 지원자 현황을 한눈에 확인하고, 파이프라인을 관리하세요.
               </p>
               <div className="mt-4 flex flex-wrap gap-2">
@@ -245,7 +245,7 @@ export default function ExtensionPage() {
                 익스텐션 설치
               </h3>
               <p className="mt-2 text-sm text-gray-600">
-                크롬 웹스토어에서 PostKit 익스텐션을 설치합니다.
+                크롬 웹스토어에서 Recruify 익스텐션을 설치합니다.
               </p>
             </div>
 
@@ -297,7 +297,7 @@ export default function ExtensionPage() {
             </h2>
             <p className="mt-4 text-lg text-gray-400">
               크롬 익스텐션 출시 시 가장 먼저 알려드립니다.
-              지금 PostKit에 가입하고 기다려 주세요.
+              지금 Recruify에 가입하고 기다려 주세요.
             </p>
             <div className="mt-8">
               <Link href="/signup">
@@ -317,7 +317,7 @@ export default function ExtensionPage() {
       <footer className="border-t border-gray-200 py-12">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-            <div className="text-xl font-semibold text-gray-900">PostKit</div>
+            <div className="text-xl font-semibold text-gray-900">Recruify</div>
             <nav className="mt-6 md:mt-0 flex space-x-8">
               <Link
                 href="/#features"
@@ -340,7 +340,7 @@ export default function ExtensionPage() {
             </nav>
           </div>
           <div className="mt-8 border-t border-gray-200 pt-8 text-center text-sm text-gray-500">
-            2024 PostKit. All rights reserved.
+            2024 Recruify. All rights reserved.
           </div>
         </div>
       </footer>

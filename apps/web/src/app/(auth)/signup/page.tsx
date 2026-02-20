@@ -9,7 +9,7 @@ export default function SignupPage() {
       {/* Left side - Branding */}
       <div className="hidden lg:flex lg:w-1/2 bg-gray-900 text-white flex-col justify-between p-12">
         <div>
-          <h1 className="text-2xl font-semibold">PostKit</h1>
+          <h1 className="text-2xl font-semibold">Recruify</h1>
         </div>
         <div className="space-y-6">
           <h2 className="text-4xl font-semibold leading-tight">
@@ -34,7 +34,7 @@ export default function SignupPage() {
               Create your account
             </h2>
             <p className="mt-2 text-gray-600">
-              Get started with PostKit in minutes
+              Get started with Recruify in minutes
             </p>
           </div>
 

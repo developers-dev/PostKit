@@ -46,7 +46,7 @@ export function LoginForm() {
         id: 'demo-admin',
         email: 'admin@postkit.demo',
         name: 'Demo Admin',
-        company: 'PostKit Demo Company'
+        company: 'Recruify Demo Company'
       },
       isDemo: true,
       createdAt: new Date().toISOString()

@@ -10,10 +10,10 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'PostKit - Recruitment Automation Platform',
+  title: 'Recruify - 채용 자동화 플랫폼',
   description:
-    'Post once, reach everywhere. Score resumes with AI. Manage your entire recruitment pipeline in one place.',
-  keywords: ['recruitment', 'hiring', 'HR', 'job posting', 'resume screening', 'AI'],
+    '채용공고 한 번 작성으로 전 플랫폼 자동 게시. AI 기반 이력서 분석. 통합 채용 파이프라인 관리.',
+  keywords: ['채용', '인사', 'HR', '채용공고', '이력서', 'AI', '자동화'],
 }
 
 export default function RootLayout({
@@ -22,7 +22,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="ko">
       <body className={`${inter.variable} font-sans antialiased`}>
         {children}
       </body>

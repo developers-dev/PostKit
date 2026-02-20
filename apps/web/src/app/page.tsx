@@ -13,7 +13,7 @@ export default function LandingPage() {
           <div className="flex h-16 items-center justify-between">
             <div className="flex items-center">
               <Link href="/" className="text-xl font-semibold text-gray-900">
-                PostKit
+                Recruify
               </Link>
             </div>
             <nav className="hidden md:flex items-center space-x-8">
@@ -248,7 +248,7 @@ export default function LandingPage() {
             </div>
             <div>
               <div className="text-4xl font-semibold text-white">50+</div>
-              <div className="mt-2 text-gray-400">PostKit 도입 기업</div>
+              <div className="mt-2 text-gray-400">Recruify 도입 기업</div>
             </div>
           </div>
         </div>
@@ -262,7 +262,7 @@ export default function LandingPage() {
               채용 프로세스를 혁신할 준비가 되셨나요?
             </h2>
             <p className="mt-4 text-lg text-gray-600">
-              PostKit과 함께 스마트한 채용을 시작하세요.
+              Recruify과 함께 스마트한 채용을 시작하세요.
               지금 바로 무료로 체험해 보세요.
             </p>
             <div className="mt-8">
@@ -282,7 +282,7 @@ export default function LandingPage() {
       <footer className="border-t border-gray-200 py-12">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-            <div className="text-xl font-semibold text-gray-900">PostKit</div>
+            <div className="text-xl font-semibold text-gray-900">Recruify</div>
             <nav className="mt-6 md:mt-0 flex space-x-8">
               <Link
                 href="#features"
@@ -305,7 +305,7 @@ export default function LandingPage() {
             </nav>
           </div>
           <div className="mt-8 border-t border-gray-200 pt-8 text-center text-sm text-gray-500">
-            2024 PostKit. All rights reserved.
+            2024 Recruify. All rights reserved.
           </div>
         </div>
       </footer>

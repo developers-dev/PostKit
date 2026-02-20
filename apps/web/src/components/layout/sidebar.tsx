@@ -97,7 +97,7 @@ export function Sidebar() {
     <aside className="fixed inset-y-0 left-0 z-50 w-64 bg-gray-900">
       <div className="flex h-16 items-center px-6 border-b border-gray-800">
         <Link href="/dashboard" className="text-xl font-semibold text-white">
-          PostKit
+          Recruify
         </Link>
       </div>
 
@@ -129,7 +129,7 @@ export function Sidebar() {
 
       <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-800">
         <div className="text-xs text-gray-500">
-          PostKit v1.0.0
+          Recruify v1.0.0
         </div>
       </div>
     </aside>
