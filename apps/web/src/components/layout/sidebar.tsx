@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils'
 
 const navigation = [
   {
-    name: 'Dashboard',
+    name: '대시보드',
     href: '/dashboard',
     icon: (
       <svg
@@ -27,7 +27,7 @@ const navigation = [
     ),
   },
   {
-    name: 'Job Postings',
+    name: '채용공고',
     href: '/postings',
     icon: (
       <svg
@@ -46,7 +46,7 @@ const navigation = [
     ),
   },
   {
-    name: 'Applicants',
+    name: '지원자',
     href: '/applicants',
     icon: (
       <svg
@@ -65,7 +65,7 @@ const navigation = [
     ),
   },
   {
-    name: 'Settings',
+    name: '설정',
     href: '/settings',
     icon: (
       <svg
@@ -96,7 +96,7 @@ export function Sidebar() {
   return (
     <aside className="fixed inset-y-0 left-0 z-50 w-64 bg-gray-900">
       <div className="flex h-16 items-center px-6 border-b border-gray-800">
-        <Link href="/dashboard" className="text-xl font-semibold text-white">
+        <Link href="/" className="text-xl font-semibold text-white hover:text-gray-200 transition-colors">
           Recruify
         </Link>
       </div>
