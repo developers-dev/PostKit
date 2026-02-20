@@ -33,7 +33,7 @@ importers:
         specifier: ^5.2.2
         version: 5.2.2(react-hook-form@7.71.1(react@19.2.3))
       '@postkit/shared-types':
-        specifier: workspace:*
+        specifier: file:../../packages/shared-types
         version: link:../../packages/shared-types
       '@supabase/ssr':
         specifier: ^0.8.0
