@@ -20,7 +20,7 @@ function SubmitButton() {
       className="w-full bg-gray-900 hover:bg-gray-800"
       disabled={pending}
     >
-      {pending ? 'Signing in...' : 'Sign in'}
+      {pending ? '로그인 중...' : '로그인'}
     </Button>
   )
 }
@@ -64,10 +64,10 @@ export function LoginForm() {
           disabled={isDemoLoading}
           className="w-full h-12 bg-blue-600 hover:bg-blue-700 text-white font-medium"
         >
-          {isDemoLoading ? 'Loading...' : 'Demo Login (Hackathon)'}
+          {isDemoLoading ? '로딩중...' : '데모 로그인 (해커톤)'}
         </Button>
         <p className="text-xs text-center text-gray-500">
-          Click to explore the platform without signing up
+          회원가입 없이 플랫폼을 체험해 보세요
         </p>
       </div>
 
@@ -76,7 +76,7 @@ export function LoginForm() {
           <Separator className="w-full" />
         </div>
         <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-white px-2 text-gray-500">Or continue with email</span>
+          <span className="bg-white px-2 text-gray-500">또는 이메일로 로그인</span>
         </div>
       </div>
 
@@ -89,7 +89,7 @@ export function LoginForm() {
 
         <div className="space-y-2">
           <Label htmlFor="email" className="text-gray-700">
-            Email address
+            이메일
           </Label>
           <Input
             id="email"
@@ -104,7 +104,7 @@ export function LoginForm() {
 
         <div className="space-y-2">
           <Label htmlFor="password" className="text-gray-700">
-            Password
+            비밀번호
           </Label>
           <Input
             id="password"
@@ -112,7 +112,7 @@ export function LoginForm() {
             type="password"
             autoComplete="current-password"
             required
-            placeholder="Enter your password"
+            placeholder="비밀번호를 입력하세요"
             className="h-11"
           />
         </div>

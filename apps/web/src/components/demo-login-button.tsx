@@ -37,7 +37,7 @@ export function DemoLoginButton({ size = 'lg', className }: DemoLoginButtonProps
       size={size}
       className={className}
     >
-      {isLoading ? 'Loading...' : 'Try Demo'}
+      {isLoading ? '로딩중...' : '데모 체험'}
     </Button>
   )
 }

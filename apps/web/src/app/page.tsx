@@ -21,19 +21,19 @@ export default function LandingPage() {
                 href="#features"
                 className="text-sm font-medium text-gray-600 hover:text-gray-900"
               >
-                Features
+                기능
               </Link>
               <Link
                 href="#how-it-works"
                 className="text-sm font-medium text-gray-600 hover:text-gray-900"
               >
-                How it works
+                사용방법
               </Link>
               <Link
-                href="#pricing"
+                href="/extension"
                 className="text-sm font-medium text-gray-600 hover:text-gray-900"
               >
-                Pricing
+                익스텐션
               </Link>
             </nav>
             <div className="flex items-center space-x-4">
@@ -43,7 +43,7 @@ export default function LandingPage() {
               />
               <Link href="/login">
                 <Button variant="ghost" className="text-gray-600">
-                  Sign in
+                  로그인
                 </Button>
               </Link>
             </div>
@@ -56,12 +56,14 @@ export default function LandingPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
             <h1 className="text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
-              Recruitment automation for modern HR teams
+              HR 팀을 위한
+              <br />
+              채용 자동화 플랫폼
             </h1>
             <p className="mt-6 text-lg leading-8 text-gray-600">
-              Post job listings to multiple platforms with one click. Score resumes
-              with AI-powered analysis. Manage your entire hiring pipeline in a
-              single dashboard.
+              채용공고 한 번 작성으로 전 플랫폼 자동 게시.
+              AI 기반 이력서 분석으로 최적의 후보자 추천.
+              하나의 대시보드에서 전체 채용 파이프라인 관리.
             </p>
             <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
               <DemoLoginButton
@@ -74,12 +76,12 @@ export default function LandingPage() {
                   variant="outline"
                   className="h-12 px-8 border-gray-300 w-full sm:w-auto"
                 >
-                  Start free trial
+                  무료 시작하기
                 </Button>
               </Link>
             </div>
             <p className="mt-4 text-sm text-gray-500">
-              No signup required for demo
+              회원가입 없이 데모 체험 가능
             </p>
           </div>
         </div>
@@ -90,10 +92,10 @@ export default function LandingPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="text-3xl font-semibold text-gray-900">
-              Everything you need to hire faster
+              더 빠른 채용을 위한 모든 기능
             </h2>
             <p className="mt-4 text-lg text-gray-600">
-              Streamline your recruitment process from posting to hiring
+              공고 작성부터 최종 채용까지, 채용 프로세스를 혁신합니다
             </p>
           </div>
 
@@ -116,11 +118,11 @@ export default function LandingPage() {
                 </svg>
               </div>
               <h3 className="mt-6 text-lg font-semibold text-gray-900">
-                Multi-Platform Posting
+                멀티 플랫폼 자동 게시
               </h3>
               <p className="mt-2 text-gray-600">
-                Write your job description once and automatically post to JobKorea,
-                Saramin, Wanted, and more. Save hours of repetitive work.
+                채용공고 한 번 작성으로 잡코리아, 사람인, 원티드 등
+                전 플랫폼에 자동 게시. 반복 작업 시간을 대폭 절감합니다.
               </p>
             </div>
 
@@ -142,11 +144,11 @@ export default function LandingPage() {
                 </svg>
               </div>
               <h3 className="mt-6 text-lg font-semibold text-gray-900">
-                AI Resume Scoring
+                AI 이력서 자동 채점
               </h3>
               <p className="mt-2 text-gray-600">
-                GPT-4o analyzes each resume against your job requirements. Get
-                scores, strengths, risks, and recommended interview questions.
+                GPT-4o가 채용 요건에 맞춰 이력서를 분석합니다.
+                점수, 강점, 리스크, 면접 질문까지 자동 생성합니다.
               </p>
             </div>
 
@@ -168,11 +170,11 @@ export default function LandingPage() {
                 </svg>
               </div>
               <h3 className="mt-6 text-lg font-semibold text-gray-900">
-                Pipeline Management
+                파이프라인 통합 관리
               </h3>
               <p className="mt-2 text-gray-600">
-                Track every candidate through your hiring stages. From application
-                to offer, manage your pipeline with a visual kanban board.
+                지원부터 최종 합격까지 모든 후보자를 한눈에.
+                칸반 보드로 채용 파이프라인을 시각적으로 관리합니다.
               </p>
             </div>
           </div>
@@ -183,9 +185,9 @@ export default function LandingPage() {
       <section id="how-it-works" className="py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h2 className="text-3xl font-semibold text-gray-900">How it works</h2>
+            <h2 className="text-3xl font-semibold text-gray-900">사용 방법</h2>
             <p className="mt-4 text-lg text-gray-600">
-              Get started in three simple steps
+              3단계로 시작하는 스마트 채용
             </p>
           </div>
 
@@ -195,11 +197,11 @@ export default function LandingPage() {
                 1
               </div>
               <h3 className="mt-6 text-lg font-semibold text-gray-900">
-                Create your job posting
+                채용공고 작성
               </h3>
               <p className="mt-2 text-gray-600">
-                Write your job description with AI assistance. Our system helps you
-                craft compelling listings that attract qualified candidates.
+                AI가 직무명과 요구사항을 기반으로 매력적인 채용공고를
+                자동으로 작성해 드립니다.
               </p>
             </div>
 
@@ -208,11 +210,11 @@ export default function LandingPage() {
                 2
               </div>
               <h3 className="mt-6 text-lg font-semibold text-gray-900">
-                Publish everywhere
+                전 플랫폼 게시
               </h3>
               <p className="mt-2 text-gray-600">
-                With one click, your job posting goes live on all major job boards.
-                The Chrome extension handles the multi-platform distribution.
+                크롬 익스텐션으로 주요 채용 플랫폼에 한 번에 게시.
+                더 이상 각 사이트에 일일이 등록할 필요가 없습니다.
               </p>
             </div>
 
@@ -221,12 +223,11 @@ export default function LandingPage() {
                 3
               </div>
               <h3 className="mt-6 text-lg font-semibold text-gray-900">
-                Review and hire
+                AI 분석 및 채용
               </h3>
               <p className="mt-2 text-gray-600">
-                AI scores incoming resumes automatically. Review top candidates,
-                move them through your pipeline, and make data-driven hiring
-                decisions.
+                AI가 지원자 이력서를 자동 채점하고 상위 후보를 추천합니다.
+                데이터 기반의 채용 결정을 내리세요.
               </p>
             </div>
           </div>
@@ -239,15 +240,15 @@ export default function LandingPage() {
           <div className="grid gap-8 md:grid-cols-3 text-center">
             <div>
               <div className="text-4xl font-semibold text-white">75%</div>
-              <div className="mt-2 text-gray-400">Time saved on posting</div>
+              <div className="mt-2 text-gray-400">공고 게시 시간 절감</div>
             </div>
             <div>
-              <div className="text-4xl font-semibold text-white">3x</div>
-              <div className="mt-2 text-gray-400">Faster candidate screening</div>
+              <div className="text-4xl font-semibold text-white">3배</div>
+              <div className="mt-2 text-gray-400">후보자 검토 속도 향상</div>
             </div>
             <div>
               <div className="text-4xl font-semibold text-white">50+</div>
-              <div className="mt-2 text-gray-400">Companies trust PostKit</div>
+              <div className="mt-2 text-gray-400">PostKit 도입 기업</div>
             </div>
           </div>
         </div>
@@ -258,24 +259,20 @@ export default function LandingPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-3xl font-semibold text-gray-900">
-              Ready to transform your hiring process?
+              채용 프로세스를 혁신할 준비가 되셨나요?
             </h2>
             <p className="mt-4 text-lg text-gray-600">
-              Join HR teams who have streamlined their recruitment with PostKit.
-              Start your free trial today.
+              PostKit과 함께 스마트한 채용을 시작하세요.
+              지금 바로 무료로 체험해 보세요.
             </p>
             <div className="mt-8">
-              <Link href="/signup">
-                <Button
-                  size="lg"
-                  className="bg-gray-900 text-white hover:bg-gray-800 h-12 px-8"
-                >
-                  Get started for free
-                </Button>
-              </Link>
+              <DemoLoginButton
+                size="lg"
+                className="bg-blue-600 text-white hover:bg-blue-700 h-12 px-8"
+              />
             </div>
             <p className="mt-4 text-sm text-gray-500">
-              No credit card required. Free plan available.
+              신용카드 불필요. 무료 플랜 제공.
             </p>
           </div>
         </div>
@@ -291,19 +288,19 @@ export default function LandingPage() {
                 href="#features"
                 className="text-sm text-gray-600 hover:text-gray-900"
               >
-                Features
+                기능
               </Link>
               <Link
-                href="#pricing"
+                href="/extension"
                 className="text-sm text-gray-600 hover:text-gray-900"
               >
-                Pricing
+                익스텐션
               </Link>
               <Link
                 href="/login"
                 className="text-sm text-gray-600 hover:text-gray-900"
               >
-                Sign in
+                로그인
               </Link>
             </nav>
           </div>
