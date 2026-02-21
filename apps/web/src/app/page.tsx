@@ -105,7 +105,6 @@ export default function LandingPage() {
           <div className="grid gap-8 md:grid-cols-3">
             {/* Pain Point 1 */}
             <div className="bg-gray-800 p-8 rounded-lg border border-gray-700">
-              <div className="text-4xl mb-4">📋</div>
               <h3 className="text-xl font-semibold mb-3 text-white">
                 오늘도 4개 플랫폼에<br />같은 공고를 복붙하셨나요?
               </h3>
@@ -119,7 +118,6 @@ export default function LandingPage() {
 
             {/* Pain Point 2 */}
             <div className="bg-gray-800 p-8 rounded-lg border border-gray-700">
-              <div className="text-4xl mb-4">⏰</div>
               <h3 className="text-xl font-semibold mb-3 text-white">
                 이력서 200개,<br />오늘 안에 다 보셨나요?
               </h3>
@@ -134,7 +132,6 @@ export default function LandingPage() {
 
             {/* Pain Point 3 */}
             <div className="bg-gray-800 p-8 rounded-lg border border-gray-700">
-              <div className="text-4xl mb-4">📄</div>
               <h3 className="text-xl font-semibold mb-3 text-white">
                 PDF 포트폴리오, Word 이력서,<br />PPT 작업물.
               </h3>
