@@ -3,6 +3,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -210,12 +211,22 @@ function getPlatformLabel(platform: string) {
 }
 
 export default function ApplicantsPage() {
+  const searchParams = useSearchParams()
+  const postingIdFromUrl = searchParams.get('posting')
+
   const [postings, setPostings] = useState<Posting[]>([])
   const [applicants, setApplicants] = useState<Applicant[]>([])
   const [isLoading, setIsLoading] = useState(true)
-  const [selectedPosting, setSelectedPosting] = useState<string>('all')
+  const [selectedPosting, setSelectedPosting] = useState<string>(postingIdFromUrl || 'all')
   const [selectedStage, setSelectedStage] = useState<string>('all')
   const [selectedApplicant, setSelectedApplicant] = useState<Applicant | null>(null)
+
+  // Update filter when URL changes
+  useEffect(() => {
+    if (postingIdFromUrl) {
+      setSelectedPosting(postingIdFromUrl)
+    }
+  }, [postingIdFromUrl])
 
   useEffect(() => {
     async function fetchPostings() {
