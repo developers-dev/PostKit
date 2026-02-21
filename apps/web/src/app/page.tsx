@@ -87,6 +87,68 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Pain Points Section */}
+      <section className="py-20 bg-gray-900 text-white">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-semibold">
+              채용, 아직도 이렇게 하고 계신가요?
+            </h2>
+            <p className="mt-4 text-lg text-gray-400">
+              4개 플랫폼에 공고 복붙 → 이력서 200개 수동 검토 → PDF 포트폴리오는 그냥 패스
+            </p>
+            <p className="mt-2 text-xl font-medium text-blue-400">
+              Recruify가 전부 대신합니다.
+            </p>
+          </div>
+
+          <div className="grid gap-8 md:grid-cols-3">
+            {/* Pain Point 1 */}
+            <div className="bg-gray-800 p-8 rounded-lg border border-gray-700">
+              <div className="text-4xl mb-4">📋</div>
+              <h3 className="text-xl font-semibold mb-3 text-white">
+                오늘도 4개 플랫폼에<br />같은 공고를 복붙하셨나요?
+              </h3>
+              <p className="text-gray-400 mb-4">
+                잡코리아, 사람인, 원티드, 점핏... 매번 같은 내용을 붙여넣기하느라 지치셨죠?
+              </p>
+              <p className="text-blue-400 font-medium">
+                공고는 한 번만 쓰세요.<br />나머지는 Recruify가 합니다.
+              </p>
+            </div>
+
+            {/* Pain Point 2 */}
+            <div className="bg-gray-800 p-8 rounded-lg border border-gray-700">
+              <div className="text-4xl mb-4">⏰</div>
+              <h3 className="text-xl font-semibold mb-3 text-white">
+                이력서 200개,<br />오늘 안에 다 보셨나요?
+              </h3>
+              <p className="text-gray-400 mb-4">
+                쏟아지는 지원서 속에서 좋은 후보를 찾기란 쉽지 않습니다.
+              </p>
+              <p className="text-blue-400 font-medium">
+                AI가 10초 만에 점수로 줄 세워드립니다.<br />
+                <span className="text-gray-500 text-sm">개인정보는 우리 서버에 남지 않습니다.</span>
+              </p>
+            </div>
+
+            {/* Pain Point 3 */}
+            <div className="bg-gray-800 p-8 rounded-lg border border-gray-700">
+              <div className="text-4xl mb-4">📄</div>
+              <h3 className="text-xl font-semibold mb-3 text-white">
+                PDF 포트폴리오, Word 이력서,<br />PPT 작업물.
+              </h3>
+              <p className="text-gray-400 mb-4">
+                채용 플랫폼에서 읽지 못하는 파일들, 하나하나 다운받아 열어보셨나요?
+              </p>
+              <p className="text-blue-400 font-medium">
+                플랫폼이 못 읽는 파일,<br />Recruify는 읽습니다.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Features Section */}
       <section id="features" className="py-20 bg-gray-50">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
